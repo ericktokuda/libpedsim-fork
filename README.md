@@ -43,4 +43,4 @@ Tested only on Linux 3.16.0-4-amd64, Debian Jessie.
 
 ## License
 
-The core library is licensed under the terms of of the GNU Lesser General Public License (LGPL).
+The core library is licensed under the terms of of the GNU Lesser General Public License (LGPL), according to the [authors](http://pedsim.silmaril.org/download/).
