@@ -4,11 +4,6 @@ Pedestrians flow simulation
 ## Synopsis
 Work in progress of a simulation of pedestrians flow, based on the [work](http://pedsim.silmaril.org/) of Christian Gloor.
 
-## Code Example
-`
-./pedsim scenes/scene1.xml
-`
-
 ## Installation
 You will need
  * Qt5
@@ -19,6 +14,19 @@ In Ubuntu/Debian, it can be done by:
 `
 aptitude install qt5-default qt5-qmake qt5-style-plugins build-essential
 `
+
+## Run
+To run it, the easiest way is to just open the `sample/pedsim.pro` in QtCreator.
+Your will need to compile it:
+
+`qmake pedsim.pro -r -spec linux-g++-64`
+
+Once compiled, 
+
+`
+./pedsim scenes/scene1.xml
+`
+
 
 
 ## API Reference
