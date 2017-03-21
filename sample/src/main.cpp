@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
 
     QString scenefile = argv[1];
     if (scenefile == "") {
-        scenefile = "scene.xml";
+        scenefile = "scenes/scene.xml";
     }
 
     Q_INIT_RESOURCE(application);

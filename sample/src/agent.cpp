@@ -20,9 +20,14 @@ using namespace std;
 
 /// Agent Constructor
 /// \date    2012-01-17
-Agent::Agent(QGraphicsScene *pscene) : Tagent() {
+//Agent::Agent(QGraphicsScene *pscene) : Tagent() {
+Agent::Agent(QGraphicsScene *pscene, int type) : Tagent() {
     graphicsscene = pscene;
-    rect = graphicsscene->addRect(QRectF(0,0,1,1), QPen(Qt::white, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin), QBrush(QColor(Qt::white)));
+	Qt::GlobalColor agcolor;
+	setType(type);
+	agcolor = type ? Qt::red : Qt::white;
+
+    rect = graphicsscene->addRect(QRectF(0,0,1,1), QPen(agcolor, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin), QBrush(QColor(Qt::white)));
     lineea = graphicsscene->addLine(QLineF(0, 0, 1, 1), QPen(Qt::gray, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     lineoa = graphicsscene->addLine(QLineF(0, 0, -1, 1), QPen(Qt::blue, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     linesa = graphicsscene->addLine(QLineF(0, 0, 1, 1), QPen(Qt::red, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));

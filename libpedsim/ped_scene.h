@@ -85,6 +85,7 @@ namespace Ped {
 
         virtual void cleanup();
         virtual void moveAgents(double h);
+		virtual int countNearToCar(double h);
 
         set<const Ped::Tagent*> getNeighbors(double x, double y, double dist) const;
         const vector<Tagent*>& getAllAgents() const { return agents; };

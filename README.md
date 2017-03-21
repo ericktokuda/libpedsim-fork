@@ -28,7 +28,7 @@ make
 Once compiled, 
 
 
-`./simulation scenes/scene.xml `
+`./simulation`
 
 
 

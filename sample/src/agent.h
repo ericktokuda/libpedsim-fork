@@ -19,7 +19,7 @@ using namespace std;
 class Agent : public Ped::Tagent {
 private:
 public:
-    Agent(QGraphicsScene *scene);
+	Agent(QGraphicsScene *pscene, int type = 0);
 
     void move(double h);
     virtual Ped::Tvector socialForce(const set<const Ped::Tagent*> &neighbors);

@@ -10,20 +10,41 @@
   <waypoint id="psw1" x="-88" y=" 88" r="5" />
   <waypoint id="psw2" x="-64" y=" 64" r="5" />
 
-  <!-- agents -->
-  <agent x="-75" y="0" n="100" dx="2" dy="75">
+  <waypoint id="pnw3" x="-75" y="-75" r="5" />
+  <waypoint id="pne3" x=" 75" y="-75" r="5" />
+  <waypoint id="pse3" x=" 75" y=" 75" r="5" />
+  <waypoint id="psw3" x="-75" y=" 75" r="5" />
+
+  <!-- people -->
+  <agent x="-75" y="0" n="60" dx="2" dy="150" type="person">
 	 <addwaypoint id="pnw1" />
 	 <addwaypoint id="pne1" />
 	 <addwaypoint id="pse1" />
 	 <addwaypoint id="psw1" />
   </agent>
 
-	agents
-	<agent x="-75" y="0" n="100" dx="2" dy="75">
+  <!-- people -->
+	<agent x="-75" y="0" n="60" dx="2" dy="140" type="person">
 	 <addwaypoint id="psw2" />
 	 <addwaypoint id="pse2" />
 	 <addwaypoint id="pne2" />
 	 <addwaypoint id="pnw2" />
+	</agent>
+
+  <!-- people -->
+	<agent x="65" y="0" n="60" dx="2" dy="140" type="person">
+	 <addwaypoint id="pne2" />
+	 <addwaypoint id="pnw2" />
+	 <addwaypoint id="psw2" />
+	 <addwaypoint id="pse2" />
+	</agent>
+
+	<!--cars-->
+	<agent x="75" y="0" n="1" dx="2" dy="75" type="car">
+	 <addwaypoint id="pse3" />
+	 <addwaypoint id="psw3" />
+	 <addwaypoint id="pnw3" />
+	 <addwaypoint id="pne3" />
 	</agent>
 
   <!-- walls -->

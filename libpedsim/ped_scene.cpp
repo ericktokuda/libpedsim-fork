@@ -181,6 +181,32 @@ void Ped::Tscene::moveAgents(double h) {
     }
 }
 
+int Ped::Tscene::countNearToCar(double h) {
+	int n = 0;
+	double xthresh = 10;
+	double ythresh = 10;
+
+    for (Tagent* agent : agents)
+	{
+		if (agent->getType() == 0)
+			continue;
+
+		const Tvector carpos = agent->getPosition();
+
+		for (Tagent* agent : agents) {
+			if (agent->getType() != 0)
+				continue;
+
+			const Tvector pedpos = agent->getPosition();
+			bool insidex = carpos.x - pedpos.x < xthresh;
+			bool insidey = carpos.y - pedpos.y < ythresh;
+			if (insidex and insidey)
+				n++;
+		}
+	}
+	return n;
+}
+
 /// Internally used to update the quadtree.
 /// \date    2012-01-28
 /// \param
