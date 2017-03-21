@@ -19,13 +19,16 @@ aptitude install qt5-default qt5-qmake qt5-style-plugins build-essential
 To run it, the easiest way is to just open the `sample/pedsim.pro` in QtCreator.
 Your will need to compile it:
 
-`qmake pedsim.pro -r -spec linux-g++-64`
+~~~~
+cd sample
+qmake pedsim.pro -r -spec linux-g++-64
+make
+~~~~
 
 Once compiled, 
 
-`
-./pedsim scenes/scene1.xml
-`
+
+`./simulation scenes/scene.xml `
 
 
 

@@ -1,7 +1,7 @@
 
 
 TEMPLATE = app
-TARGET = pedsim
+TARGET = simulation
 DEPENDPATH += . release
 INCLUDEPATH += . ../../libpedsim
 DESTDIR = ../

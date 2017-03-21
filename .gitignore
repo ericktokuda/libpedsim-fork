@@ -9,7 +9,7 @@
 *.so
 *.dll
 *.dylib
-pedsim
+simulation
 
 # Qt-es
 
