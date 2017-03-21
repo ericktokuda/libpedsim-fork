@@ -1,0 +1,40 @@
+<welcome>
+
+  <!-- waypoints - define before the agents! -->
+  <waypoint id="pnw1" x="-88" y="-88" r="5" />
+  <waypoint id="pnw2" x="-64" y="-64" r="5" />
+  <waypoint id="pne1" x=" 88" y="-88" r="5" />
+  <waypoint id="pne2" x=" 64" y="-64" r="5" />
+  <waypoint id="pse1" x=" 88" y=" 88" r="5" />
+  <waypoint id="pse2" x=" 64" y=" 64" r="5" />
+  <waypoint id="psw1" x="-88" y=" 88" r="5" />
+  <waypoint id="psw2" x="-64" y=" 64" r="5" />
+
+  <!-- agents -->
+  <agent x="-75" y="0" n="100" dx="2" dy="75">
+	 <addwaypoint id="pnw1" />
+	 <addwaypoint id="pne1" />
+	 <addwaypoint id="pse1" />
+	 <addwaypoint id="psw1" />
+  </agent>
+
+	agents
+	<agent x="-75" y="0" n="100" dx="2" dy="75">
+	 <addwaypoint id="psw2" />
+	 <addwaypoint id="pse2" />
+	 <addwaypoint id="pne2" />
+	 <addwaypoint id="pnw2" />
+	</agent>
+
+  <!-- walls -->
+  <obstacle x1="-90" y1="-90" x2=" 90" y2="-90" />
+  <obstacle x1=" 90" y1="-90" x2=" 90" y2=" 90" />
+  <obstacle x1=" 90" y1=" 90" x2="-90" y2=" 90" />
+  <obstacle x1="-90" y1=" 90" x2="-90" y2="-90" />
+
+  <obstacle x1="-58" y1="-60" x2=" 58" y2="-60" />
+  <obstacle x1=" 60" y1="-58" x2=" 60" y2=" 58" />
+  <obstacle x1=" 58" y1=" 60" x2="-58" y2=" 60" />
+  <obstacle x1="-60" y1=" 58" x2="-60" y2="-58" />
+
+</welcome>
