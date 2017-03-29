@@ -183,26 +183,28 @@ void Ped::Tscene::moveAgents(double h) {
 
 int Ped::Tscene::countNearToCar(double h) {
 	int n = 0;
-	double xthresh = 10;
-	double ythresh = 10;
+	double xthresh = 15;
+	double ythresh = 15;
+
+	Tvector carpos;
+	int PEDESTRIAN = 0;
 
     for (Tagent* agent : agents)
 	{
-		if (agent->getType() == 0)
+		if (agent->getType() != PEDESTRIAN) {
+			carpos = agent->getPosition();
+			break;
+		}
+	}
+
+	for (Tagent* agent : agents) {
+		if (agent->getType() != PEDESTRIAN)
 			continue;
 
-		const Tvector carpos = agent->getPosition();
-
-		for (Tagent* agent : agents) {
-			if (agent->getType() != 0)
-				continue;
-
-			const Tvector pedpos = agent->getPosition();
-			bool insidex = carpos.x - pedpos.x < xthresh;
-			bool insidey = carpos.y - pedpos.y < ythresh;
-			if (insidex and insidey)
-				n++;
-		}
+		const Tvector pedpos = agent->getPosition();
+		bool insidex = abs(carpos.x - pedpos.x) < xthresh;
+		bool insidey = abs(carpos.y - pedpos.y) < ythresh;
+		if (insidex and insidey) n++;
 	}
 	return n;
 }

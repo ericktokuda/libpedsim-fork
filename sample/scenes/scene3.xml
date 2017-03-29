@@ -1,14 +1,14 @@
 <welcome>
 
   <!-- waypoints - define before the agents! -->
-  <waypoint id="pnw1" x="-88" y="-88" r="5" />
-  <waypoint id="pnw2" x="-64" y="-64" r="5" />
-  <waypoint id="pne1" x=" 88" y="-88" r="5" />
-  <waypoint id="pne2" x=" 64" y="-64" r="5" />
-  <waypoint id="pse1" x=" 88" y=" 88" r="5" />
-  <waypoint id="pse2" x=" 64" y=" 64" r="5" />
-  <waypoint id="psw1" x="-88" y=" 88" r="5" />
-  <waypoint id="psw2" x="-64" y=" 64" r="5" />
+  <waypoint id="pnw1" x="-86" y="-86" r="3" />
+  <waypoint id="pnw2" x="-64" y="-64" r="3" />
+  <waypoint id="pne1" x=" 86" y="-86" r="3" />
+  <waypoint id="pne2" x=" 64" y="-64" r="3" />
+  <waypoint id="pse1" x=" 86" y=" 86" r="3" />
+  <waypoint id="pse2" x=" 64" y=" 64" r="3" />
+  <waypoint id="psw1" x="-86" y=" 86" r="3" />
+  <waypoint id="psw2" x="-64" y=" 64" r="3" />
 
   <waypoint id="pnw3" x="-75" y="-75" r="5" />
   <waypoint id="pne3" x=" 75" y="-75" r="5" />
@@ -16,7 +16,7 @@
   <waypoint id="psw3" x="-75" y=" 75" r="5" />
 
   <!-- people -->
-  <agent x="-75" y="0" n="60" dx="2" dy="150" type="person">
+  <agent x="-86" y="0" n="40" dx="2" dy="150" type="person">
 	 <addwaypoint id="pnw1" />
 	 <addwaypoint id="pne1" />
 	 <addwaypoint id="pse1" />
@@ -24,7 +24,7 @@
   </agent>
 
   <!-- people -->
-	<agent x="-75" y="0" n="60" dx="2" dy="140" type="person">
+	<agent x="-64" y="0" n="60" dx="2" dy="140" type="person">
 	 <addwaypoint id="psw2" />
 	 <addwaypoint id="pse2" />
 	 <addwaypoint id="pne2" />
@@ -32,11 +32,11 @@
 	</agent>
 
   <!-- people -->
-	<agent x="65" y="0" n="60" dx="2" dy="140" type="person">
-	 <addwaypoint id="pne2" />
-	 <addwaypoint id="pnw2" />
-	 <addwaypoint id="psw2" />
-	 <addwaypoint id="pse2" />
+	<agent x="86" y="0" n="40" dx="2" dy="140" type="person">
+	 <addwaypoint id="pne1" />
+	 <addwaypoint id="pnw1" />
+	 <addwaypoint id="psw1" />
+	 <addwaypoint id="pse1" />
 	</agent>
 
 	<!--cars-->
@@ -53,9 +53,9 @@
   <obstacle x1=" 90" y1=" 90" x2="-90" y2=" 90" />
   <obstacle x1="-90" y1=" 90" x2="-90" y2="-90" />
 
-  <obstacle x1="-58" y1="-60" x2=" 58" y2="-60" />
-  <obstacle x1=" 60" y1="-58" x2=" 60" y2=" 58" />
-  <obstacle x1=" 58" y1=" 60" x2="-58" y2=" 60" />
-  <obstacle x1="-60" y1=" 58" x2="-60" y2="-58" />
+  <obstacle x1="-60" y1="-60" x2=" 60" y2="-60" />
+  <obstacle x1=" 60" y1="-60" x2=" 60" y2=" 60" />
+  <obstacle x1=" 60" y1=" 60" x2="-60" y2=" 60" />
+  <obstacle x1="-60" y1=" 60" x2="-60" y2="-60" />
 
 </welcome>

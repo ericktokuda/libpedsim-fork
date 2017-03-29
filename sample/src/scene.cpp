@@ -34,8 +34,6 @@ Scene::Scene(QGraphicsScene *pscene) : Tscene(), scene(pscene)  {
   cleanuptimer->start(1000);
 };
 
-//int countNearToCar(double a){}
-
 void Scene::printNearToCar() {
 	int n = countNearToCar(config.simh);
 	printf("n: %d\n", n);
