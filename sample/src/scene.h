@@ -31,6 +31,7 @@ class Scene : public QObject, public Ped::Tscene {
  public slots:
   void moveAllAgents();
   void printNearToCar();
+  void printCellDensity();
   void cleanupSlot();
   
  public:

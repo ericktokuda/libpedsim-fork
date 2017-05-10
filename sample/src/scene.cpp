@@ -27,6 +27,7 @@ Scene::Scene(QGraphicsScene *pscene) : Tscene(), scene(pscene)  {
 
   //movetimer = new QTimer();
   QObject::connect(movetimer, SIGNAL(timeout()), this, SLOT(printNearToCar()));
+  QObject::connect(movetimer, SIGNAL(timeout()), this, SLOT(printCellDensity()));
   //movetimer->start(1000/20);
 
   cleanuptimer = new QTimer();
@@ -35,8 +36,13 @@ Scene::Scene(QGraphicsScene *pscene) : Tscene(), scene(pscene)  {
 };
 
 void Scene::printNearToCar() {
-	int n = countNearToCar(config.simh);
-	printf("n: %d\n", n);
+	int n = countNearToCar();
+	printf("Around the car: %d\t", n);
+}
+
+void Scene::printCellDensity() {
+	int n = getCellDensity();
+	printf("(0,0)-cell count: %d\n", n);
 }
 
 void Scene::moveAllAgents() {

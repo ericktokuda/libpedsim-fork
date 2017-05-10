@@ -23,11 +23,15 @@ using namespace std;
 //Agent::Agent(QGraphicsScene *pscene) : Tagent() {
 Agent::Agent(QGraphicsScene *pscene, int type) : Tagent() {
     graphicsscene = pscene;
-	Qt::GlobalColor agcolor;
+	Qt::GlobalColor carcolor = Qt::yellow;
 	setType(type);
-	agcolor = type ? Qt::red : Qt::white;
+	//agcolor = type ? Qt::red : Qt::white;
 
-    rect = graphicsscene->addRect(QRectF(0,0,1,1), QPen(agcolor, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin), QBrush(QColor(Qt::white)));
+	if (type)
+		rect = graphicsscene->addRect(QRectF(0,0,2,2), QPen(carcolor, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin), QBrush(carcolor));
+	else
+		rect = graphicsscene->addRect(QRectF(0,0,1,1), QPen(Qt::white, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin), QBrush(QColor(Qt::white)));
+
     lineea = graphicsscene->addLine(QLineF(0, 0, 1, 1), QPen(Qt::gray, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     lineoa = graphicsscene->addLine(QLineF(0, 0, -1, 1), QPen(Qt::blue, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     linesa = graphicsscene->addLine(QLineF(0, 0, 1, 1), QPen(Qt::red, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));

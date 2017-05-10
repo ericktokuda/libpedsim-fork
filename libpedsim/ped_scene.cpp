@@ -181,7 +181,7 @@ void Ped::Tscene::moveAgents(double h) {
     }
 }
 
-int Ped::Tscene::countNearToCar(double h) {
+int Ped::Tscene::countNearToCar() {
 	int n = 0;
 	double xthresh = 15;
 	double ythresh = 15;
@@ -207,6 +207,21 @@ int Ped::Tscene::countNearToCar(double h) {
 		if (insidex and insidey) n++;
 	}
 	return n;
+}
+
+float Ped::Tscene::getCellDensity() {
+	int n = 0;
+	double xthresh = 5;
+	double ythresh = 5;
+	Tvector mycell(-85,-85, 0);
+
+	for (Tagent* agent : agents) {
+		const Tvector pedpos = agent->getPosition();
+		bool insidex = abs(mycell.x - pedpos.x) < xthresh;
+		bool insidey = abs(mycell.y - pedpos.y) < ythresh;
+		if (insidex and insidey) n++;
+	}
+	return (float) n;
 }
 
 /// Internally used to update the quadtree.
