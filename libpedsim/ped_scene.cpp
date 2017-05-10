@@ -209,11 +209,11 @@ int Ped::Tscene::countNearToCar() {
 	return n;
 }
 
-float Ped::Tscene::getCellDensity() {
+float Ped::Tscene::getCellDensity(int xcenter, int ycenter, int xrad, int yrad) {
 	int n = 0;
-	double xthresh = 5;
-	double ythresh = 5;
-	Tvector mycell(-85,-85, 0);
+	double xthresh = xrad;
+	double ythresh = yrad;
+	Tvector mycell(xcenter,ycenter, 0);
 
 	for (Tagent* agent : agents) {
 		const Tvector pedpos = agent->getPosition();

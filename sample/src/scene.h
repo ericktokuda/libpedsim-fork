@@ -26,7 +26,9 @@ class Scene : public QObject, public Ped::Tscene {
   QGraphicsScene *scene;
   QTimer *movetimer;
   QTimer *cleanuptimer;
+  QTimer *heattimer;
   Grid *grid;
+  vector<vector<QGraphicsItem*>> heatcells;
 
  public slots:
   void moveAllAgents();
