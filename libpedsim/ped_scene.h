@@ -7,9 +7,9 @@
 #define _ped_scene_h_ 1
 
 //disable warnings on 255 char debug symbols
-#pragma warning (disable : 4786)
+//#pragma warning (disable : 4786)
 //disable warnings on extern before template instantiation
-#pragma warning (disable : 4231)
+//#pragma warning (disable : 4231)
 
 #ifdef _WIN32
 #ifdef _DLL
@@ -86,7 +86,9 @@ namespace Ped {
         virtual void cleanup();
         virtual void moveAgents(double h);
 		virtual int countNearToCar();
-		virtual float getCellCount(int xcenter, int ycenter, int xrad, int yrad);
+		virtual float getRealCount(int xcenter, int ycenter, int xrad, int yrad);
+		virtual float getObservedCount(int xcenter, int ycenter, int xrad, int yrad);
+		virtual void getCarPos(int pos[2]);
 
         set<const Ped::Tagent*> getNeighbors(double x, double y, double dist) const;
         const vector<Tagent*>& getAllAgents() const { return agents; };

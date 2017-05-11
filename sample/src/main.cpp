@@ -62,6 +62,7 @@ int main(int argc, char **argv) {
     gblscene = pedscene;
 
     Loadscene l(scenefile, pedscene, graphicsscene);
+    //Loadscene l2("scenes/scene.xml", pedscene, graphicsscene);
 
     mainwindow.graphicsView->setScene(graphicsscene);
     // mainwindow.graphicsView->setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));

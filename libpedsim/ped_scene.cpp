@@ -15,6 +15,7 @@
 #include <stack>
 
 using namespace std;
+#define PEDESTRIAN 0
 
 
 /// Default constructor. If this constructor is used, there will be no quadtree created.
@@ -187,7 +188,6 @@ int Ped::Tscene::countNearToCar() {
 	double ythresh = 15;
 
 	Tvector carpos;
-	int PEDESTRIAN = 0;
 
     for (Tagent* agent : agents)
 	{
@@ -209,7 +209,7 @@ int Ped::Tscene::countNearToCar() {
 	return n;
 }
 
-float Ped::Tscene::getCellCount(int xcenter, int ycenter, int xrad, int yrad) {
+float Ped::Tscene::getRealCount(int xcenter, int ycenter, int xrad, int yrad) {
 	int n = 0;
 	double xthresh = xrad;
 	double ythresh = yrad;
@@ -219,11 +219,42 @@ float Ped::Tscene::getCellCount(int xcenter, int ycenter, int xrad, int yrad) {
 		const Tvector pedpos = agent->getPosition();
 		bool insidex = abs(mycell.x - pedpos.x) < xthresh;
 		bool insidey = abs(mycell.y - pedpos.y) < ythresh;
+		bool isped = agent->getType() == PEDESTRIAN;
+
+		if (insidex and insidey and isped) n++;
+			//continue;
+	}
+	return (float) n;
+}
+
+float Ped::Tscene::getObservedCount(int xcenter, int ycenter, int xrad, int yrad) {
+	int n = 0;
+	double xthresh = xrad;
+	double ythresh = yrad;
+	Tvector mycell(xcenter,ycenter, 0);
+
+	for (Tagent* agent : agents) {
+		const Tvector pedpos = agent->getPosition();
+		bool insidex = abs(mycell.x - pedpos.x) < xthresh;
+		bool insidey = abs(mycell.y - pedpos.y) < ythresh;
+		bool isped = agent->getType() == PEDESTRIAN;
+
 		if (insidex and insidey) n++;
 	}
 	return (float) n;
 }
 
+void Ped::Tscene::getCarPos(int pos[2]) {
+	for (Tagent* agent : agents) {
+		if (agent->getType() != PEDESTRIAN)
+		{
+			Tvector agentpos = agent->getPosition();
+			pos[0] = agentpos.x;
+			pos[1] = agentpos.y;
+			return;
+		}
+	}
+}
 /// Internally used to update the quadtree.
 /// \date    2012-01-28
 /// \param

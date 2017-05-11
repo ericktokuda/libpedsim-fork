@@ -28,13 +28,18 @@ class Scene : public QObject, public Ped::Tscene {
   QTimer *cleanuptimer;
   QTimer *heattimer;
   Grid *grid;
-  vector<vector<QGraphicsItem*>> heatcells;
-  vector<vector<int>> acccounts;
+  vector<vector<QGraphicsItem*>> realheatmap;
+  vector<vector<QGraphicsItem*>> obsheatmap;
+  vector<vector<int>> obscount;
+  vector<vector<int>> obsnsamples;
+  vector<vector<int>> realcount;
 
  public slots:
   void moveAllAgents();
-  void printNearToCar();
-  void printCellDensity();
+  void renderRealDensities();
+  void renderObservedDensities();
+  void incrementTicks();
+  void getPointCell(const int pointpos[2], int indices[2]);
   void cleanupSlot();
   
  public:

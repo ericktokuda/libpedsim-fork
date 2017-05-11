@@ -24,9 +24,9 @@ MainWindow::MainWindow() {
     addDockWidget(Qt::LeftDockWidgetArea, uicontrol);
 
     createActions();
-    createMenus();
+    //createMenus();
     createStatusBar();
-
+	uicontrol->hide();
     readSettings();
 
     connect(uicontrol, SIGNAL(zoomin()), this, SLOT(zoomin()));
@@ -70,17 +70,17 @@ void MainWindow::createActions() {
 
 
 void MainWindow::createMenus() {
-    fileMenu = menuBar()->addMenu(tr("&File"));
-    fileMenu->addSeparator();
-    fileMenu->addAction(exitAct);
+	fileMenu = menuBar()->addMenu(tr("&File"));
+	fileMenu->addSeparator();
+	fileMenu->addAction(exitAct);
 
-    viewMenu = menuBar()->addMenu(tr("&View"));
-    viewMenu->addAction(uicontrol->toggleViewAction());
+	viewMenu = menuBar()->addMenu(tr("&View"));
+	viewMenu->addAction(uicontrol->toggleViewAction());
 
-    menuBar()->addSeparator();
+	menuBar()->addSeparator();
 
-    helpMenu = menuBar()->addMenu(tr("&Help"));
-    helpMenu->addAction(aboutAct);
+	helpMenu = menuBar()->addMenu(tr("&Help"));
+	helpMenu->addAction(aboutAct);
 }
 
 
@@ -99,7 +99,8 @@ void MainWindow::createStatusBar() {
 void MainWindow::readSettings() {
     QSettings settings("Christian Gloor", "PedSim");
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
-    QSize size = settings.value("size", QSize(1280, 800)).toSize();
+    //QSize size = settings.value("size", QSize(1280, 800)).toSize();
+	QSize size = settings.value("size", QSize(2000, 800)).toSize();
     resize(size);
     move(pos);
 }
