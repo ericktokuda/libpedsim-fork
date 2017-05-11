@@ -15,12 +15,13 @@
 using namespace std;
 
 extern Config config;
-long counter = 0;
+unsigned int nsamples = 0;
 
 Scene::Scene(QGraphicsScene *pscene) : Tscene(), scene(pscene)  {
   tree = new Tree(pscene, this, 0, -200, -160, 400, 320);
   grid = new Grid(-200, -160, 400, 320, scene);
   heatcells  = vector<vector<QGraphicsItem*>>(100 , vector<QGraphicsItem*>(100, (QGraphicsItem*) NULL));
+  acccounts = vector<vector<int>>(100 , vector<int>(100, 0));
 
   movetimer = new QTimer();
   QObject::connect(movetimer, SIGNAL(timeout()), this, SLOT(moveAllAgents()));
@@ -44,37 +45,46 @@ void Scene::printNearToCar() {
 void Scene::printCellDensity() {
 	int xrad = 5;
 	int yrad = 5;;
-	int alpha = 70;
+	int alpha = 100;
 	int cellsize = 10;
-	int maxped = 6;
+	int maxdensity = 2;
+	float colorfactor = 255 / maxdensity ;
+
+	nsamples += 1;
 
 	int i, j;
-	for (i = -9; i < 9; i++) {
+
+	for (i = -9; i <= 9; i++) {
 		int ii = i + 9;
-		for (j = -9; j < 9; j++) {
+
+		for (j = -9; j <= 9; j++) {
 			int jj = j + 9;
+
 			int xcenter = i * cellsize + xrad;
 			int ycenter = j * cellsize + xrad;
-			int n = getCellDensity(xcenter, ycenter, xrad, yrad);
+
+			int  kkk = getCellCount(xcenter, ycenter, xrad, yrad);
+			acccounts[ii][jj] += kkk;
+			int cellcount = acccounts[ii][jj];
+			float density = cellcount / (float) nsamples;
 
 			if (heatcells[ii][jj] != NULL)
 				scene->removeItem(heatcells[ii][jj]);
 
-			int c = (int)( ((float)(n) / maxped) * 255);
+			int c = (int)(density * colorfactor);
 			if (c > 255) c = 255;
 
 			QColor color = QColor(c, c, c, alpha);
 
-			QGraphicsItem *rect = (QGraphicsItem*) scene->addRect(QRectF(xcenter - xrad, ycenter - yrad, 2*xrad,2*yrad),
+			QGraphicsItem *rect = (QGraphicsItem*) scene->addRect(
+					QRectF(xcenter - xrad, ycenter - yrad, 2*xrad,2*yrad),
 					QPen(color, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin),
 					QBrush(color));
 
 			heatcells[ii][jj] = rect;
 		}
 	}
-
-	printf("%ld\n", counter);
-	counter += 1;
+	printf("Number of samples: %ld\n", nsamples);
 }
 
 void Scene::moveAllAgents() {

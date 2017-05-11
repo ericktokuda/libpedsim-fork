@@ -209,7 +209,7 @@ int Ped::Tscene::countNearToCar() {
 	return n;
 }
 
-float Ped::Tscene::getCellDensity(int xcenter, int ycenter, int xrad, int yrad) {
+float Ped::Tscene::getCellCount(int xcenter, int ycenter, int xrad, int yrad) {
 	int n = 0;
 	double xthresh = xrad;
 	double ythresh = yrad;
