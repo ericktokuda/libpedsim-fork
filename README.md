@@ -4,11 +4,9 @@ Pedestrians flow simulation
 ## Synopsis
 Work in progress of a simulation of pedestrians flow, based on the [work](http://pedsim.silmaril.org/) of Christian Gloor.
 
-## Demo
-
 [//]: # "![Screenshot](https://raw.githubusercontent.com/tokudaek/pedestrian-simulation/master/demo.gif)"
 
-On the left, the density of particles observed by the bigger dot and on the right, the real density.
+[//]: # "On the left, the density of particles observed by the bigger dot and on the right, the real density."
 
 ## Installation
 You will need
