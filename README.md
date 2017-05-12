@@ -4,6 +4,7 @@ Pedestrians flow simulation
 ## Synopsis
 Work in progress of a simulation of pedestrians flow, based on the [work](http://pedsim.silmaril.org/) of Christian Gloor.
 
+## Demo
 ## Installation
 You will need
  * Qt5
