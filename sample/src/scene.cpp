@@ -12,10 +12,19 @@
 
 #include <iostream>
 
+#define REAL 0
+#define OBSERVED 1
 using namespace std;
 
 extern Config config;
 unsigned int nticks = 0;
+	int xrad = 5;
+	int yrad = 5;;
+	int alpha = 100;
+	int cellsize = 10;
+	int maxdensity = 3;
+	float colorfactor = 255 / maxdensity ;
+	int xshift = 200;
 
 Scene::Scene(QGraphicsScene *pscene) : Tscene(), scene(pscene)  {
   tree = new Tree(pscene, this, 0, -200, -160, 400, 320);
@@ -32,8 +41,8 @@ Scene::Scene(QGraphicsScene *pscene) : Tscene(), scene(pscene)  {
 
   cleanuptimer = new QTimer();
   QObject::connect(cleanuptimer, SIGNAL(timeout()), this, SLOT(incrementTicks()));
-  QObject::connect(cleanuptimer, SIGNAL(timeout()), this, SLOT(renderRealDensities()));
-  QObject::connect(cleanuptimer, SIGNAL(timeout()), this, SLOT(renderObservedDensities()));
+  QObject::connect(cleanuptimer, SIGNAL(timeout()), this, SLOT(updateAndRenderRealDensities()));
+  QObject::connect(cleanuptimer, SIGNAL(timeout()), this, SLOT(updateAndRenderObsDensities()));
 
   QObject::connect(cleanuptimer, SIGNAL(timeout()), this, SLOT(cleanupSlot()));
   cleanuptimer->start(1000);
@@ -77,113 +86,138 @@ void Scene::getPointCell(const int pointpos[2], int indices[2]) { //very naive w
 	indices[1] = minind[1];
 }
 
-void Scene::renderObservedDensities() {
-	int xrad = 5;
-	int yrad = 5;;
-	int alpha = 100;
-	int cellsize = 10;
-	int maxdensity = 3;
-	float colorfactor = 255 / maxdensity ;
-	//int xshift = 200;
-
-	int i, j;
-
-	int carpos[] = {0, 0};
-	int carcell[] = {0, 0};
-
-	getCarPos(carpos);
-	getPointCell(carpos, carcell);
-
-	for (i = carcell[0] - 1; i <= carcell[0] + 1 ; i++) {
-		int ii = i + 9;
-		for (j = carcell[1] - 1; j <= carcell[1] + 1 ; j++) {
-			int jj = j + 9;
-			int xcenter = i * cellsize + cellsize/2;
-			int ycenter = j * cellsize + cellsize/2;
-
-			int  kkk = getRealCount(xcenter, ycenter, xrad, yrad);
-			obscount[ii][jj] += kkk;
-			obsnsamples[ii][jj] ++;
-			//printf("i:%d, j:%dcount:%d\n", i, j, kkk);
-		}
-	}
-
-	//return;
-
-	for (i = -9; i < 9; i++) {
-		int ii = i + 9;
-
-		for (j = -9; j < 9; j++) {
-			int jj = j + 9;
-
-			int xcenter = i * cellsize + xrad;
-			int ycenter = j * cellsize + xrad;
-
-			if (obsheatmap[ii][jj] != NULL)
-				scene->removeItem(obsheatmap[ii][jj]);
-
-			float density = 0;
-			if (obsnsamples[ii][jj] == 0) continue;
-
-			density = (float) obscount[ii][jj] / obsnsamples[ii][jj];
-
-			int c = (int)(density * colorfactor);
-			if (c > 255) c = 255;
-
-			QColor color = QColor(c, c, c, alpha);
-
-			QGraphicsItem *rect = (QGraphicsItem*) scene->addRect(
-					QRectF(xcenter - xrad, ycenter - yrad, 2*xrad,2*yrad),
-					QPen(color, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin),
-					QBrush(color));
-
-			obsheatmap[ii][jj] = rect;
-		}
-	}
+void Scene::updateAndRenderObsDensities() {
+	updateCounts(OBSERVED);
+	renderDensities(OBSERVED);
+	return;
 }
 
-void Scene::renderRealDensities() {
-	int xrad = 5;
-	int yrad = 5;;
-	int alpha = 100;
-	int cellsize = 10;
-	int maxdensity = 3;
-	float colorfactor = 255 / maxdensity ;
-	int xshift = 200;
+QGraphicsItem* Scene::renderRect(int x, int y, int w, int h, QColor color) {
+	return (QGraphicsItem*) scene->addRect(
+			QRectF(x, y, w, h),
+			QPen(color, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin),
+			QBrush(color));
+}
 
+void Scene::renderCellDensity(int ii, int jj, int option) {
+	int i = ii - 9;
+	int j = jj - 9;
+	int rectx = i*cellsize;
+	int recty = j*cellsize;
+	float density;
 
-	int i, j;
+	if (option == REAL) {
+		rectx += xshift;
+		int cellcount = realcount[ii][jj];
+		density = (float) cellcount / nticks;
+	}
+	else if (option == OBSERVED) {
+		if (obsnsamples[ii][jj] == 0) return;
+		density = (float) obscount[ii][jj] / obsnsamples[ii][jj];
+	}
 
-	for (i = -9; i < 9; i++) {
-		int ii = i + 9;
+	int c = (int)(density * colorfactor);
+	if (c > 255) c = 255;
+	QColor color = QColor(c, c, c, alpha);
 
-		for (j = -9; j < 9; j++) {
-			int jj = j + 9;
+	QGraphicsItem *rect = renderRect(rectx, recty,
+			cellsize, cellsize, color);
+
+	if (option == REAL)
+		realheatmap[ii][jj] = rect;
+	else if (option == OBSERVED)
+		obsheatmap[ii][jj] = rect;
+}
+
+void Scene::updateRealCounts() {
+	int ii, jj;
+	for (ii = 0; ii <= 18; ii++) {
+		for (jj = 0; jj <= 18; jj++) {
+			int i = ii - 9;
+			int j = jj - 9;
 
 			int xcenter = i * cellsize + xrad;
 			int ycenter = j * cellsize + xrad;
 
 			int  kkk = getRealCount(xcenter, ycenter, xrad, yrad);
 			realcount[ii][jj] += kkk;
-			int cellcount = realcount[ii][jj];
-			float density = cellcount / (float) nticks;
-
-			if (realheatmap[ii][jj] != NULL)
-				scene->removeItem(realheatmap[ii][jj]);
-
-			int c = (int)(density * colorfactor);
-			if (c > 255) c = 255;
-
-			QColor color = QColor(c, c, c, alpha);
-
-			QGraphicsItem *rect = (QGraphicsItem*) scene->addRect(
-					QRectF(xcenter - xrad + xshift, ycenter - yrad, 2*xrad,2*yrad),
-					QPen(color, 0.1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin),
-					QBrush(color));
-
-			realheatmap[ii][jj] = rect;
 		}
 	}
+}
+
+bool Scene::insideWindow(int center[2], int p[2]) {
+	int l = center[0] - 1;
+	int r = center[0] + 1;
+	int t = center[1] - 1;
+	int b = center[1] + 1;
+	if (p[0] >= l && p[0] <= r && p[1] >= t && p[1] <= b)
+		return true;
+	else
+		return false;
+}
+
+void Scene::updateCounts(int option) {
+	int i, j, ii, jj;
+	int carpos[2], carcell[2], carind[2];
+
+	if (option == OBSERVED) {
+		getCarPos(carpos);
+		getPointCell(carpos, carcell);
+		carind[0] = carcell[0] + 9;
+		carind[1] = carcell[1] + 9;
+	}
+
+	for (ii = 0; ii <= 18; ii++) {
+		for (jj = 0; jj <= 18; jj++) {
+			int p[2] = {ii, jj};
+
+			if (option == OBSERVED && !insideWindow(carind, p))
+				continue;
+
+			int xcenter = (ii - 9) * cellsize + xrad;
+			int ycenter = (jj - 9) * cellsize + xrad;
+
+			int  realc = getRealCount(xcenter, ycenter, xrad, yrad);
+
+			if (option == REAL) {
+				realcount[ii][jj] += realc;
+			} else if (option == OBSERVED){
+				obscount[ii][jj] += realc;
+				obsnsamples[ii][jj] ++;
+			}
+		}
+	}
+}
+
+void Scene::renderRealDensities() {
+	int i, j;
+	for (i = 0; i < 18; i++) {
+		for (j = 0; j < 18; j++) {
+			if (realheatmap[i][j] != NULL)
+				scene->removeItem(realheatmap[i][j]);
+			renderCellDensity(i, j, REAL);
+		}
+	}
+}
+
+void Scene::renderDensities(int option) {
+	int i, j;
+
+	for (i = 0; i < 18; i++) {
+		for (j = 0; j < 18; j++) {
+			if (option == REAL && realheatmap[i][j])
+				scene->removeItem(realheatmap[i][j]);
+			else if (option == OBSERVED && obsheatmap[i][j])
+				scene->removeItem(obsheatmap[i][j]);
+
+			renderCellDensity(i, j, option);
+		}
+	}
+}
+
+void Scene::updateAndRenderRealDensities() {
+	updateCounts(REAL);
+	renderDensities(REAL);
 	printf("Tick %u\n", nticks);
 }
 

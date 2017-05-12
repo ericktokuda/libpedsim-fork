@@ -36,11 +36,19 @@ class Scene : public QObject, public Ped::Tscene {
 
  public slots:
   void moveAllAgents();
-  void renderRealDensities();
-  void renderObservedDensities();
+  void updateAndRenderRealDensities();
+  void updateAndRenderObsDensities();
+  //void renderObservedDensities();
   void incrementTicks();
   void getPointCell(const int pointpos[2], int indices[2]);
   void cleanupSlot();
+  void renderCellDensity(int i, int j, int option);
+  QGraphicsItem* renderRect(int x, int y, int w, int h, QColor color);
+  void updateRealCounts();
+  void renderRealDensities();
+  void updateCounts(int option);
+  void renderDensities(int option);
+  bool insideWindow(int center[2], int p[2]);
   
  public:
 //  Scene();

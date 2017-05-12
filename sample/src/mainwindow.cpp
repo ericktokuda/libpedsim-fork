@@ -18,7 +18,7 @@ extern Config config;
 MainWindow::MainWindow() {
     graphicsView = new QGraphicsView();
     setCentralWidget(graphicsView);
-    graphicsView->scale(4, 4);
+    graphicsView->scale(3, 3);
 
     uicontrol = new Control(this, false);
     addDockWidget(Qt::LeftDockWidgetArea, uicontrol);
@@ -100,7 +100,7 @@ void MainWindow::readSettings() {
     QSettings settings("Christian Gloor", "PedSim");
     QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
     //QSize size = settings.value("size", QSize(1280, 800)).toSize();
-	QSize size = settings.value("size", QSize(2000, 800)).toSize();
+	QSize size = settings.value("size", QSize(1280, 800)).toSize();
     resize(size);
     move(pos);
 }
