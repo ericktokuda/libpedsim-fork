@@ -18,7 +18,7 @@ extern Config config;
 MainWindow::MainWindow() {
     graphicsView = new QGraphicsView();
     setCentralWidget(graphicsView);
-    graphicsView->scale(3, 3);
+    graphicsView->scale(2.5, 2.5);
 
     uicontrol = new Control(this, false);
     addDockWidget(Qt::LeftDockWidgetArea, uicontrol);
