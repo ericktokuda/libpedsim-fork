@@ -74,6 +74,7 @@ namespace Ped {
         virtual void drawObstacle(Tobstacle &o) = 0;
 	// waypoint
         virtual void drawWaypoint(Twaypoint &w) = 0;
+	virtual void write(string message) {};
 
     protected:
     };
@@ -135,9 +136,9 @@ namespace Ped {
 
         // waypoint
         virtual void drawWaypoint(Twaypoint &w);
+	virtual void write(string message) {};
 
     protected:
-	virtual void write(string message) {};
     };
 
     /// Class that defines a frame-by-frame proprietary XMLOutputWriter.
@@ -162,9 +163,9 @@ namespace Ped {
     public:
       UDPOutputWriter();
       virtual ~UDPOutputWriter();
+	virtual void write(string message);
 
     protected:
-	virtual void write(string message);
 	SOCKET socket_;
     };
 
