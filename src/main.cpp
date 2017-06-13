@@ -28,7 +28,7 @@ const int CARNUM = 3;
 const float CARMAXSPEED = 2.0;
 const int CARSAMPFREQ = 10;
 const int CARRAD = 10;
-const int PAUSE = 0;
+const int PAUSE = 5;
 const int CELLW = 10;
 const int CELLH = 10;
 const int NXCELLS = 20;
@@ -58,12 +58,13 @@ double get_random_real(double a, double b) {
 	@return Scene*
 */
 Scene* build_scene() {
-	//OutputWriter *ow = new UDPOutputWriter();
-	FileOutputWriter *ow = new FileOutputWriter();
+	OutputWriter *ow = new UDPOutputWriter();
 	//ow->setScenarioName("Density Estimation");
 
 	Scene *scene = new Scene(-MAPRAD, -MAPRAD, CELLW, CELLH, NXCELLS, NYCELLS);
 	scene->setOutputWriter(ow);
+	FileOutputWriter *ow2 = new FileOutputWriter();
+	scene->setOutputWriter(ow2);
 
 	//scene->add_polygon(Polygon(L, B, L, T, R, T, R, B));
 	scene->add_polygon(Polygon(LL, BB, LL, TT, RR, TT, RR, BB));
