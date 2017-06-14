@@ -4,3 +4,6 @@ lib/
 *.swp
 *.o
 pedsim_out.txt
+src/2dvis/moc_*
+src/2dvis/2dvis
+src/2dvis/qrc_2dvis.cpp
