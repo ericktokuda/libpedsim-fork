@@ -67,7 +67,10 @@ Scene* build_scene() {
 	scene->setOutputWriter(ow2);
 
 	//scene->add_polygon(Polygon(L, B, L, T, R, T, R, B));
+	//
+	vector<int> vertices = {LL, BB, LL, TT, RR, TT, RR, BB};
 	scene->add_polygon(Polygon(LL, BB, LL, TT, RR, TT, RR, BB));
+	scene->add_impassable_region(vertices);
 
 	return scene;
 }

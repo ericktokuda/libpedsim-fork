@@ -11,6 +11,25 @@ void Scene::setOutputWriter(OutputWriter *ow) {
 	draw_scenario_params(x0, y0, cellw, cellh, nxcells, nycells);
 }
 
+bool Scene::isinsidepolygon(vector<double> p, vector<vector<double> > v) {
+	bool ispolygon = false;
+	int nvert = v.size();
+	int i, j;
+
+	for (i = 0, j = nvert-1; i < nvert; j = i++) {
+		bool t = (v[i][1] > p[1]) != (v[j][1] > p[1]);
+		if (!t) continue;
+
+		double num = (v[j][0] - v[i][0]) * (p[1] - v[i][1]);
+		double den = (v[j][1] - v[i][1]);
+		double term = v[i][0];
+
+		double a = p[0] < num / den + term;
+		if (a) ispolygon = !ispolygon;
+	}
+	return ispolygon;
+}
+
 void Scene::draw_scenario_params (int x0, int y0, int cellw, int cellh, int nxcells, int nycells) {
   std::ostringstream msg;
 
@@ -112,6 +131,10 @@ void Scene::update() {
 
 void Scene::add_polygon(Polygon polygon) {
 	for (auto o: polygon.lines) addObstacle(o);
+}
+
+void Scene::add_impassable_region(vector<int> v) {
+	//this->impassable.push_back
 }
 
 vector<const Person*> Scene::get_people_nearby(Tvector pos, double rad) {

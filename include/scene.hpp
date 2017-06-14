@@ -34,6 +34,7 @@ class Scene : public Tscene {
 	public:
 		Scene() : Tscene() {};
 		void setOutputWriter(OutputWriter *ow);
+		bool isinsidepolygon(vector<double> p, vector<vector<double> > v);
 		void draw_scenario_params(int x0, int y0, int cellw, int cellh, int nxcells, int nycells);
 		vector<Car*> get_cars();
 		vector<Person*> get_people();
@@ -46,6 +47,7 @@ class Scene : public Tscene {
 		void update();
 		const vector<Tagent *> get_agents(int x0, int y0, int x1, int y1);
 		void add_polygon(Polygon polygon);
+		void add_impassable_region(vector<int> v);
 		vector<const Person*> get_people_nearby(Tvector pos, double rad);
 		void move_agents();
 };
