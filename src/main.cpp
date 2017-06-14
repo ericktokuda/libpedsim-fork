@@ -3,6 +3,7 @@
 #include "car.hpp"
 #include "person.hpp"
 
+#include <random>
 #include <iostream>
 #include <sstream>
 #include <chrono>
@@ -25,10 +26,10 @@ const int STREETW = 20;
 const int HSTREETW = STREETW / 2;
 const float PEDMAXSPEED = 1.5;
 const int CARNUM = 3;
-const float CARMAXSPEED = 2.0;
+const float CARMAXSPEED = 4.0;
 const int CARSAMPFREQ = 10;
 const int CARRAD = 10;
-const int PAUSE = 5;
+const int PAUSE = 20;
 const int CELLW = 10;
 const int CELLH = 10;
 const int NXCELLS = 20;
@@ -41,16 +42,15 @@ const int NYCELLS = 20;
 	@return int Random element
 */
 int get_random_integer(int a, int b) {
-	srand((unsigned) time(NULL));
-	int mod = b - a + 1;
-	int ret = (rand()%mod) + a;
-	return ret;
+	std::random_device rd;
+	std::uniform_int_distribution<int> dist(a, b);
+	return dist(rd);
 }
 
 double get_random_real(double a, double b) {
-	srand((unsigned) time(NULL));
-	float ret = a + (double) (rand()) /( (double) (RAND_MAX/(b-a)));
-	return ret;
+	std::random_device rd;
+	std::uniform_real_distribution<double> dist(a, b);
+	return dist(rd);
 }
 
 /**
@@ -66,12 +66,9 @@ Scene* build_scene() {
 	FileOutputWriter *ow2 = new FileOutputWriter();
 	scene->setOutputWriter(ow2);
 
-	//scene->add_polygon(Polygon(L, B, L, T, R, T, R, B));
-	//
-	vector<int> vertices = {LL, BB, LL, TT, RR, TT, RR, BB};
-	scene->add_polygon(Polygon(LL, BB, LL, TT, RR, TT, RR, BB));
+	vector<vector<int> > vertices = {{LL, BB}, {LL, TT}, {RR, TT}, {RR, BB}};
+	scene->add_polygon(vertices);
 	scene->add_impassable_region(vertices);
-
 	return scene;
 }
 

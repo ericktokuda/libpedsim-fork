@@ -27,6 +27,7 @@ class Scene : public Tscene {
 		// These attr are actually from the Grid obj
 		int x0, y0, cellw, cellh, nxcells, nycells;
 		Grid *grid;
+		vector<vector<vector<int> > > impassable;
 
 	// Methods
 	private:
@@ -34,20 +35,20 @@ class Scene : public Tscene {
 	public:
 		Scene() : Tscene() {};
 		void setOutputWriter(OutputWriter *ow);
-		bool isinsidepolygon(vector<double> p, vector<vector<double> > v);
+		bool is_inside_polygon(vector<int> p, vector<vector<int> > v);
 		void draw_scenario_params(int x0, int y0, int cellw, int cellh, int nxcells, int nycells);
 		vector<Car*> get_cars();
 		vector<Person*> get_people();
 		//FileOutWriter* get_fileoutwriter();
-		Scene(int x0, int y0, int cellw, int cellh, int nxcells,
-				int nycells);
+		Scene(int x0, int y0, int cellw, int cellh, int nxcells, int nycells);
 		void draw_grid(Grid *grid, string name);
 		void update_scene_grid();
 		void update_sensed_grid();
 		void update();
 		const vector<Tagent *> get_agents(int x0, int y0, int x1, int y1);
-		void add_polygon(Polygon polygon);
-		void add_impassable_region(vector<int> v);
+		void add_polygon(vector<vector<int>> v);
+		void add_impassable_region(vector<vector<int> > v);
+		bool is_passable(vector<int> p);
 		vector<const Person*> get_people_nearby(Tvector pos, double rad);
 		void move_agents();
 };

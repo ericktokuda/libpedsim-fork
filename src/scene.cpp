@@ -4,6 +4,7 @@ Scene::Scene(int x0, int y0, int cellw, int cellh, int nxcells, int nycells) :
 	Tscene(x0, y0, nxcells*cellw, nycells*cellh) {
 	grid  = new Grid(x0, y0, cellw, cellh, nxcells, nycells);
 	Car::grid->init(x0, y0, cellw, cellh, nxcells, nycells);
+	//impassable = vector<vector<vector<int> > >;
 }
 
 void Scene::setOutputWriter(OutputWriter *ow) {
@@ -11,7 +12,7 @@ void Scene::setOutputWriter(OutputWriter *ow) {
 	draw_scenario_params(x0, y0, cellw, cellh, nxcells, nycells);
 }
 
-bool Scene::isinsidepolygon(vector<double> p, vector<vector<double> > v) {
+bool Scene::is_inside_polygon(vector<int> p, vector<vector<int> > v) {
 	bool ispolygon = false;
 	int nvert = v.size();
 	int i, j;
@@ -129,12 +130,22 @@ void Scene::update() {
 	cout << xx << endl;
 }
 
-void Scene::add_polygon(Polygon polygon) {
-	for (auto o: polygon.lines) addObstacle(o);
+void Scene::add_polygon(vector<vector<int>> v) {
+	for (int i = 0; i < v.size() - 1; i++)
+		addObstacle(new Ped::Tobstacle(v[i][0], v[i][1], v[i+1][0], v[i+1][1]));
+
+	addObstacle(new Ped::Tobstacle(v.back()[0], v.back()[1], v[0][0], v[0][1]));
 }
 
-void Scene::add_impassable_region(vector<int> v) {
-	//this->impassable.push_back
+void Scene::add_impassable_region(vector<vector<int>> v) {
+	this->impassable.push_back(v);
+}
+
+bool Scene::is_passable(vector<int> p) {
+	for (auto v: this->impassable) {
+		if (is_inside_polygon(p, v)) return false;
+	}
+	return true;
 }
 
 vector<const Person*> Scene::get_people_nearby(Tvector pos, double rad) {
