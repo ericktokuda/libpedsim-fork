@@ -3,6 +3,7 @@ lib/
 *.orig
 *.swp
 *.o
+*.pro.user
 pedsim_out.txt
 src/2dvis/moc_*
 src/2dvis/2dvis
