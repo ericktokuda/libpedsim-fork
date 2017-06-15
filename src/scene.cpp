@@ -1,4 +1,5 @@
 #include "scene.hpp"
+#include <random>
 
 Scene::Scene(int x0, int y0, int cellw, int cellh, int nxcells, int nycells) :
 	Tscene(x0, y0, nxcells*cellw, nycells*cellh) {
@@ -148,6 +149,39 @@ bool Scene::is_passable(vector<int> p) {
 	return true;
 }
 
+/**
+	Get pseudo-random number between a and b. It assumes b>=a
+	@param a Lower boundary
+	@param b Higher boundary
+	@return int Random element
+*/
+int get_random_integer(int a, int b) {
+	std::random_device rd;
+	std::uniform_int_distribution<int> dist(a, b);
+	return dist(rd);
+}
+
+vector<int> Scene::get_random_agent_position() {
+	vector<int> p = {0, 0};
+
+	while (true) {	// TODO: inefficient. We should better randomize just the passable regions.
+		bool repeated = false;
+		p[0] = get_random_integer(-80, +80);
+		p[1] = get_random_integer(-80, +80);
+
+		for (auto a: agents) {
+			Tvector v = a->getPosition();
+			if (v.x == p[0] && v.y == p[1]) {
+				repeated = true;
+				//cout << "repeated" << endl;
+				break;
+			}
+		}
+
+		if (!repeated && is_passable(p))
+			return p;
+	}
+}
 vector<const Person*> Scene::get_people_nearby(Tvector pos, double rad) {
 	set<const Tagent *>  agents = getNeighbors(pos.x, pos.y, rad);
 	vector<const Person*>  people;

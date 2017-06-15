@@ -29,23 +29,11 @@ const int CARNUM = 3;
 const float CARMAXSPEED = 4.0;
 const int CARSAMPFREQ = 10;
 const int CARRAD = 10;
-const int PAUSE = 20;
+const int PAUSE = 5000;
 const int CELLW = 10;
 const int CELLH = 10;
 const int NXCELLS = 20;
 const int NYCELLS = 20;
-
-/**
-	Get pseudo-random number between a and b. It assumes b>=a
-	@param a Lower boundary
-	@param b Higher boundary
-	@return int Random element
-*/
-int get_random_integer(int a, int b) {
-	std::random_device rd;
-	std::uniform_int_distribution<int> dist(a, b);
-	return dist(rd);
-}
 
 double get_random_real(double a, double b) {
 	std::random_device rd;
@@ -84,26 +72,20 @@ void insert_inner_people(Scene *scene) {
 	Twaypoint *w4 = new Twaypoint( L + shift, B - shift, RAD);
 
 	for (int i = 0; i < 30; i++) {
-		float maxspeed = PEDMAXSPEED;
-		float agmaxspeed = (float)(rand())/RAND_MAX * maxspeed + 0.01;
+		float agmaxspeed = get_random_real(0, PEDMAXSPEED);
 		Tagent *a = new Person();
 		a->setWaypointBehavior(Tagent::BEHAVIOR_CIRCULAR);
-		a->setVmax(agmaxspeed); // same speed for all agents
+		a->setVmax(agmaxspeed);
 		a->setfactorsocialforce(10.0);
 		a->setfactorobstacleforce(1.0);
-		a->setType(Ped::person);
 
 		a->addWaypoint(w1);
 		a->addWaypoint(w2);
 		a->addWaypoint(w3);
 		a->addWaypoint(w4);
 
-		if (a->getid() % 2 == 0) {
-			a->setPosition(-80, -25 + a->getid(), 0);
-		} else {
-			a->setPosition( 80, -25 + a->getid(), 0);
-		}
-
+		vector<int> p = scene->get_random_agent_position();
+		a->setPosition(p[0], p[1], 0);
 		scene->addAgent(a);
 	}
 }
@@ -121,25 +103,20 @@ void insert_outer_people(Scene *scene) {
 
 	// create agents
 	for (int i = 0; i < 30; i++) {
-		float agmaxspeed = (float)(rand())/RAND_MAX * PEDMAXSPEED + 0.01;
+		float agmaxspeed = get_random_real(0, PEDMAXSPEED);
 		Tagent *a = new Person();
 		a->setWaypointBehavior(Tagent::BEHAVIOR_CIRCULAR);
-		a->setVmax(agmaxspeed); // same max speed for all agents
+		a->setVmax(agmaxspeed);
 		a->setfactorsocialforce(10.0);
 		a->setfactorobstacleforce(1.0);
-		a->setType(Ped::person);
 
 		a->addWaypoint(w1);
 		a->addWaypoint(w2);
 		a->addWaypoint(w3);
 		a->addWaypoint(w4);
 
-		if (a->getid() % 2 == 0) {
-			a->setPosition(-80, -25 + a->getid(), 0);
-		} else {
-			a->setPosition( 80, -25 + a->getid(), 0);
-		}
-
+		vector<int> p = scene->get_random_agent_position();
+		a->setPosition(p[0], p[1], p[2]);
 		scene->addAgent(a);
 	}
 
@@ -173,14 +150,15 @@ void insert_cars(Scene *scene) {
 		car->setVmax(carmaxspeed); // same max speed for all agents
 		car->setfactorsocialforce(10.0);
 		car->setfactorobstacleforce(1.0);
-		car->setType(Ped::car);
 
 		car->addWaypoint(w1);
 		car->addWaypoint(w2);
 		car->addWaypoint(w3);
 		car->addWaypoint(w4);
 
-		car->setPosition(L + shift, T + shift + i*get_random_integer(2, 50), 0);
+		//car->setPosition(L + shift, T + shift + i*get_random_integer(2, 50), 0);
+		vector<int> p = scene->get_random_agent_position();
+		car->setPosition(p[0], p[1], 0);
 		scene->addAgent(car);
 	}
 }
@@ -214,6 +192,7 @@ void cleanup(Scene *scene)
 void main_loop(Scene *scene) {
 	long int tick = 0;
 
+	//this_thread::sleep_for(chrono::milliseconds(5000));
 	while (true) {
 		cout << "Tick " << tick << endl;
 		tick++;

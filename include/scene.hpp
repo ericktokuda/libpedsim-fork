@@ -49,6 +49,7 @@ class Scene : public Tscene {
 		void add_polygon(vector<vector<int>> v);
 		void add_impassable_region(vector<vector<int> > v);
 		bool is_passable(vector<int> p);
+		vector<int> get_random_agent_position();
 		vector<const Person*> get_people_nearby(Tvector pos, double rad);
 		void move_agents();
 };
