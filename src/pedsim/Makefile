@@ -1,5 +1,5 @@
 CXX = clang++
-CXXFLAGS = -g -O0 -std=c++0x
+CXXFLAGS = -g -O0 -std=c++11
 TARGET = ../../lib/libpedsim.a
 
 ../../lib/libpedsim.so: ped_obstacle.cpp ped_vector.cpp ped_waypoint.cpp ped_agent.cpp ped_scene.cpp ped_tree.cpp
