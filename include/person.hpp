@@ -11,6 +11,8 @@ using std::cout;
 class Scene;
 
 class Person : public Ped::Tagent {
+	public:
+		Person();
 };
 
 #endif

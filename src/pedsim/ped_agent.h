@@ -38,6 +38,8 @@ using namespace std;
 EXPIMP_TEMPLATE template class LIBEXPORT std::deque<Ped::Twaypoint*>;
 
 namespace Ped {
+
+	enum AgentType {person, car};
     class Tscene;
 
 /// This is the main class of the library. It contains the Tagent, which eventually will move through the

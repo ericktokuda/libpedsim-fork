@@ -91,6 +91,7 @@ void insert_inner_people(Scene *scene) {
 		a->setVmax(agmaxspeed); // same speed for all agents
 		a->setfactorsocialforce(10.0);
 		a->setfactorobstacleforce(1.0);
+		a->setType(Ped::person);
 
 		a->addWaypoint(w1);
 		a->addWaypoint(w2);
@@ -126,6 +127,7 @@ void insert_outer_people(Scene *scene) {
 		a->setVmax(agmaxspeed); // same max speed for all agents
 		a->setfactorsocialforce(10.0);
 		a->setfactorobstacleforce(1.0);
+		a->setType(Ped::person);
 
 		a->addWaypoint(w1);
 		a->addWaypoint(w2);
@@ -171,6 +173,7 @@ void insert_cars(Scene *scene) {
 		car->setVmax(carmaxspeed); // same max speed for all agents
 		car->setfactorsocialforce(10.0);
 		car->setfactorobstacleforce(1.0);
+		car->setType(Ped::car);
 
 		car->addWaypoint(w1);
 		car->addWaypoint(w2);

@@ -6,6 +6,7 @@ Car::Car(Scene *scene, int sampfreq, int radius) : Ped::Tagent() {
 	this->scene = scene;
 	this->sampfreq = sampfreq;
 	this->radius = radius;
+	setType(Ped::car);
 }
 
 /**
