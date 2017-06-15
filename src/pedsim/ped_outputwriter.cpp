@@ -181,8 +181,9 @@ void Ped::XMLOutputWriter::writeTimeStep (long int timestep) {
 /// \param a The agent to be rendered.
 void Ped::XMLOutputWriter::drawAgent (Tagent &a) {
   std::ostringstream msg;
+  std::string agtype = (a.getType() == Ped::car) ? "car" : "person";
   msg << "<position type=\"agent\" ";
-  msg << "agenttype=\"" << a.getType() << "\" ";
+  msg << "agenttype=\"" << agtype << "\" ";
   msg << "id=\"" << a.getid() << "\" ";
   msg << "x=\"" << a.getPosition().x << "\" ";
   msg << "y=\"" << a.getPosition().y << "\" ";
