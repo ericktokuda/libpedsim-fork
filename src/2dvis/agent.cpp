@@ -34,9 +34,9 @@ QPainterPath Agent::shape() const {
 void Agent::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *) {
 
   // body
-  painter->setBrush(color);
-  painter->setPen(QPen(QBrush(Qt::white), .1));
-  painter->drawEllipse(SCALE * -0.2, SCALE * -0.5, SCALE * 0.4, SCALE * 1.0);
+  //painter->setBrush(color);
+  //painter->setPen(QPen(QBrush(Qt::white), .1));
+  //painter->drawEllipse(SCALE * -0.2, SCALE * -0.5, SCALE * 0.4, SCALE * 1.0);
 
   // head
   painter->setBrush(QColor(255, 192, 0));
@@ -44,15 +44,15 @@ void Agent::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *
   painter->drawEllipse(SCALE * -0.3, SCALE * -0.3, SCALE * 0.6, SCALE * 0.6);
 
   // eyes
-  painter->setBrush(Qt::black);
-  painter->setPen(QPen(QBrush(Qt::white), .05));
-  painter->drawEllipse(SCALE * 0.15, SCALE * -0.175, SCALE * 0.1, SCALE * 0.1);
-  painter->drawEllipse(SCALE * 0.15, SCALE *  0.075, SCALE * 0.1, SCALE * 0.1);
+  //painter->setBrush(Qt::black);
+  //painter->setPen(QPen(QBrush(Qt::white), .05));
+  //painter->drawEllipse(SCALE * 0.15, SCALE * -0.175, SCALE * 0.1, SCALE * 0.1);
+  //painter->drawEllipse(SCALE * 0.15, SCALE *  0.075, SCALE * 0.1, SCALE * 0.1);
 
   // hair
-  painter->setBrush(QColor(139,69,19)); // saddle brown
-  painter->setPen(QPen(QBrush(Qt::white), .05));
-  painter->drawChord(SCALE * -0.3, SCALE * -0.3, SCALE * 0.6, SCALE * 0.6, 90*16, 180*16);
+  //painter->setBrush(QColor(139,69,19)); // saddle brown
+  //painter->setPen(QPen(QBrush(Qt::white), .05));
+  //painter->drawChord(SCALE * -0.3, SCALE * -0.3, SCALE * 0.6, SCALE * 0.6, 90*16, 180*16);
 }
 
 
