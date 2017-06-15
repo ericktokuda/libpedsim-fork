@@ -8,7 +8,6 @@
 #include <math.h>
 
 #include "mygraphicsview.h"
-#include "agent.h"
 #include "waypoint.h"
 #include "obstacle.h"
 #include "itemcontainer.h"

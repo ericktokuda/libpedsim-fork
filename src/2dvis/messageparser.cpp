@@ -6,6 +6,7 @@
 #include "messageparser.h"
 #include "itemcontainer.h"
 #include "agent.h"
+#include "car.h"
 #include "waypoint.h"
 #include "obstacle.h"
 #include "item.h"
@@ -237,8 +238,14 @@ void MessageParser::parse() {
 	double y = atof(e.attribute("y", "0.0").toStdString().c_str());
 
 	if (type == "agent") {
+		std::string agenttype = e.attribute("agenttype", "").toStdString().c_str();
+
 	  if (!agentcontainer.contains(id)) {
-	    Agent *agent = new Agent;
+		  Agent *agent;
+		  if (agenttype == "car")
+			  agent = new Car;
+		  else
+			  agent = new Agent;
 	    scene->addItem(agent);
 	    agentcontainer.addItem(id, agent);
 	  }

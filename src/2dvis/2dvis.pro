@@ -20,6 +20,7 @@ contains(DEFINES, USE_CHARTS) {
 HEADERS += \
         item.h \
         agent.h \
+        car.h \
         waypoint.h \
         obstacle.h \
         itemcontainer.h \
@@ -41,6 +42,7 @@ SOURCES += \
         item.cpp \
         main.cpp \
         agent.cpp \
+        car.cpp \
         waypoint.cpp \
         obstacle.cpp \
         itemcontainer.cpp \
